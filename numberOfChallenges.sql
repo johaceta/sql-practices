@@ -39,3 +39,14 @@ with cntChallengePerHacker as (
 from tempFinalTable
 where validHackerChallenge = 1
 order by cntChallenge desc
+
+/*****option 2******/
+
+SELECT c.hacker_id, h.name, count(c.challenge_id) AS cnt 
+FROM Hackers AS h JOIN Challenges AS c ON h.hacker_id = c.hacker_id
+GROUP BY c.hacker_id, h.name 
+HAVING count(c.challenge_id) = (SELECT top 1 count(c1.challenge_id) FROM Challenges AS c1 GROUP BY c1.hacker_id 
+              ORDER BY count(*) desc) or
+count(c.challenge_id) NOT IN (SELECT count(c2.challenge_id) FROM Challenges AS c2 GROUP BY c2.hacker_id 
+            HAVING c2.hacker_id <> c.hacker_id)
+ORDER BY cnt DESC, c.hacker_id;
