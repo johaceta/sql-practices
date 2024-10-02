@@ -24,3 +24,15 @@ Query the sum of Northern Latitudes (LAT_N) from STATION having values greater t
 SELECT CAST(SUM(LAT_N) AS DECIMAL(18, 4)) AS NorthernLat
 FROM station 
 WHERE LAT_N BETWEEN 38.7880 AND 137.2345 ;
+
+Query the greatest value of the Northern Latitudes (LAT_N) from STATION that is less than 137.2345. Truncate your answer to  decimal places.
+
+1. select cast(max(LAT_N) as DECIMAL(18,4))NorthernLat
+from station
+where LAT_N <137.2345
+
+2. select TOP 1 cast((LAT_N) as DECIMAL(18,4))NorthernLat
+from station
+where LAT_N <137.2345
+ORDER BY LAT_N DESC
+
